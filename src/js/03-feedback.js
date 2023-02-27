@@ -16,8 +16,11 @@ refs.form.addEventListener(`input`, throttle(onFormInput, 500));
 populateForm();
 
 function onFormInput(event) {
-  formData[event.target.name] = event.target.value;
-  console.log(event.target.value);
+  formData = {
+    email: refs.email.value,
+    message: refs.textarea.value,
+  };
+  console.log(formData);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
 }
 
@@ -30,9 +33,8 @@ function onFormSubmit(event) {
 }
 
 function populateForm() {
-  const savedMessage = localStorage.getItem(STORAGE_KEY);
+  const parsedSavedMessage = JSON.parse(localStorage.getItem(STORAGE_KEY));
 
-  const parsedSavedMessage = JSON.parse(savedMessage);
   if (parsedSavedMessage) {
     refs.email.value = parsedSavedMessage.email;
     refs.textarea.value = parsedSavedMessage.message;
