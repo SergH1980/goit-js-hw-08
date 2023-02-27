@@ -1,6 +1,5 @@
 import Player from '@vimeo/player';
-// import throttle from 'lodash.throttle';
-import { throttle } from 'throttle-debounce';
+import throttle from 'lodash.throttle';
 console.log(throttle);
 const CURRENT_TIME_KEY = 'videoplayer-current-time';
 
@@ -13,10 +12,10 @@ player.on('play', function () {
 
 const timeUpdate = player.on(
   `timeupdate`,
-  throttle(1000, event => {
+  throttle(event => {
     localStorage.setItem(CURRENT_TIME_KEY, event.seconds);
     console.log(event.seconds);
-  })
+  }, 1000)
 );
 
 player.getVideoTitle().then(function (title) {
